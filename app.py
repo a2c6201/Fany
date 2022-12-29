@@ -48,7 +48,7 @@ def index():
 @app.route('/result', methods=['GET', 'POST'])
 def result():
     if request.method == 'POST':
-        session['request_form'] = request.form  # sessionを使ってページング
+        session['request_form'] = request.form  # sessionを使って検索条件データを保持しページングに対応
 
     request.form = session.get('request_form')
     range = request.form.get('range')
