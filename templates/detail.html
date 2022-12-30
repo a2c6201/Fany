@@ -1,0 +1,10 @@
+{% extends "base.html" %} {% block body %}
+<div class="container">
+  <div class="row">
+    <h3>{{ shop.name }}</h3>
+    <h5>{{ shop.address }}</h5>
+    <p>{{ shop.open }}</p>
+    <img src="{{ shop.photo.pc.l }}" alt="店舗画像" />
+  </div>
+</div>
+{% endblock %}

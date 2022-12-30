@@ -18,7 +18,7 @@ geo_url = config.GEOCODING_API_URL
 
 
 # 現在地近くの店舗をjson形式で抽出
-def get_shop_json(range):
+def get_shops_json(range):
     # Geolocation APIを使って緯度・経度を取得
     data = requests.get(geo_url).json()
     lat = data['latitude']
@@ -41,17 +41,35 @@ def get_shop_json(range):
     result = json.loads(responce.text)['results']['shop']
     return result
 
+# shop.idを使って店舗詳細情報を取得
+def get_shop_detail(id):
+    query = {
+        'key': hot_key, # APIキー
+        'id': id,
+        'format': 'json' # データ形式json
+            }
+    # URLとクエリでリクエスト
+    responce = requests.get(hot_url, query)
+    # 戻り値をjson形式で読み出し、['results']['shop']を抽出
+    result = json.loads(responce.text)['results']['shop']
+    print(result)
+    return result[0]
+
+
+# 検索画面
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# 検索結果一覧
 @app.route('/result', methods=['GET', 'POST'])
 def result():
     if request.method == 'POST':
-        session['request_form'] = request.form  # sessionを使って検索条件データを保持しページングに対応
+        session.permanent = True
+        session['range'] = request.form.get('range')  # sessionを使って検索条件データを保持しページングに対応
 
-    request.form = session.get('request_form')
-    range = request.form.get('range')
+    # request.form = session.get('request_form')
+    range = session['range']
     error = None
     if not range:
         error = '検索範囲を指定してください'
@@ -59,16 +77,23 @@ def result():
 
     # メイン処理
     try:
-        get_shop_json(range)
+        get_shops_json(range)
     except Exception:
         error = '現在地が特定できませんでした'
         return render_template('index.html', error=error)
-    result = get_shop_json(range)
+    result = get_shops_json(range)
     # クエリから表示しているページのページ番号を取得
     page = request.args.get(get_page_parameter(), type=int, default=1)
+    # ページング設定
     res = result[(page - 1)*20: page*20]
     pagination = Pagination(page=page, total=len(result),  per_page=20, css_framework='bootstrap4')
-    return render_template('result.html', shops = res, pagination=pagination)
+    return render_template('result.html', shops=res, pagination=pagination)
+
+@app.route('/detail/<shop_id>')
+def detail(shop_id):
+    detail = get_shop_detail(shop_id)
+    return render_template('detail.html', shop=detail)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
