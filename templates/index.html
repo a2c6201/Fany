@@ -1,16 +1,13 @@
 {% extends "base.html" %} {% block title %}Fany{% endblock %} {% block body %}
 <main class="container text-center">
-  <div class="m-3">
-    <p>Fany</p>
-  </div>
   <div class="user-input">
     {% if error %}
     <p class="error alert-danger rounded">{{error}}</p>
     {% endif %}
     <form action="/result" method="POST">
       <div class="form-group">
-        <label for="range">検索範囲を指定してください。</label>
-        <select class="form-control" name="range" id="range">
+        <label class="m-4" for="range">検索範囲を指定してください。</label>
+        <select class="m-4 form-control" name="range" id="range">
           <option>1</option>
           <option>2</option>
           <option>3</option>
