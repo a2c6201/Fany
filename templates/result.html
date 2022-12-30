@@ -1,8 +1,12 @@
-{% extends "bootstrap/base.html" %} {% block body %}
+{% extends "base.html" %} {% block body %}
 <div class="center-block">
   <div class="row justify-content-around">
     {%for shop in shops %}
-    <a href="/" class="m-4 card" style="height: 400px; width: 25rem">
+    <a
+      href="/detail/{{ shop.id }}"
+      class="m-4 card"
+      style="height: 400px; width: 25rem"
+    >
       <div class="card-body text-dark">
         <img
           src="{{ shop.photo.pc.l }}"
