@@ -1,6 +1,6 @@
-### アプリ名
+## アプリ名
 
-Fany
+### Fany
 
 #### コンセプト
 
@@ -59,3 +59,18 @@ Flask 2.2.2
 - Geolocation API
 
 ### いただきたいアドバイス
+
+### 使用方法
+
+.env ファイルを作成し、API key をそれぞれ追加(.env.sample を参照)
+
+```
+HOT_PEPPER_API_KEY = 'Hot Pepper API key'
+GEOCODING_API_KEY = 'Geocoding API key'
+```
+
+ターミナルで以下コマンドを入力し、使用ライブラリをインストール
+
+```
+pip install -r requirements.txt
+```
