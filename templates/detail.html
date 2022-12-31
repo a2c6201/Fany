@@ -1,10 +1,21 @@
 {% extends "base.html" %} {% block body %}
 <div class="container">
   <div class="row">
-    <h2 class="m-5">{{ shop.name }}</h2>
-    <h5>{{ shop.address }}</h5>
-    <p>{{ shop.open }}</p>
-    <img src="{{ shop.photo.pc.l }}" alt="店舗画像" />
+    <h2 class="mt-4 mb-4 border-2 border-bottom">{{ shop.name }}</h2>
+    <h5>
+      <i class="bi bi-geo-alt"> </i>
+      {{ shop.address }}
+    </h5>
+    <p>
+      <i class="bi bi-calendar-check"> </i>
+      営業時間：{{ shop.open }}
+    </p>
   </div>
+  <div class="row">
+    <div class="col">
+      <img src="{{ shop.photo.pc.l }}" alt="店舗画像" />
+    </div>
+  </div>
+  <button type="button" onclick="history.back()">戻る</button>
 </div>
 {% endblock %}
