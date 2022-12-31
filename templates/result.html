@@ -1,20 +1,29 @@
-{% extends "bootstrap/base.html" %} {% block body %}
+{% extends "base.html" %} {% block body %}
 <div class="center-block">
   <div class="row justify-content-around">
     {%for shop in shops %}
-    <a href="/" class="m-4 card" style="width: 25rem">
-      <div class="card-body text-dark">
+    <div class="card shadow m-3" style="max-width: 25rem">
+      <a href="/detail/{{ shop.id }}" class="card-body text-decoration-none">
         <img
           src="{{ shop.photo.pc.l }}"
           class="h-50 card-img-top"
           alt="店舗画像"
         />
-        <div class="card-body">
+        <div class="card-body text-dark">
           <h4 class="card-title">{{ shop.name }}</h4>
-          <p class="card-text">{{ shop.access }}</p>
+          <div class="card-text">
+            <p>
+              <i class="bi bi-geo-alt"> </i>
+              {{ shop.access }}
+            </p>
+            <p>
+              <i class="bi bi-tag"></i>
+              {{ shop.genre.name }}
+            </p>
+          </div>
         </div>
-      </div>
-    </a>
+      </a>
+    </div>
     {% endfor %}
   </div>
   <div class="m-5 row justify-content-around">{{ pagination.links }}</div>

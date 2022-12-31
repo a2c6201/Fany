@@ -1,21 +1,18 @@
-{% extends "bootstrap/base.html" %} {% block title %}Fany{% endblock %} {% block
-body %}
+{% extends "base.html" %} {% block title %}Fany{% endblock %} {% block body %}
 <main class="container text-center">
-  <div class="m-3">
-    <p>Fany</p>
-  </div>
   <div class="user-input">
     {% if error %}
-    <p class="error alert-danger rounded">{{error}}</p>
+    <p class="m-3 error alert-danger rounded">{{error}}</p>
     {% endif %}
     <form action="/result" method="POST">
       <div class="form-group">
-        <label for="range">検索範囲を指定してください。</label>
-        <select class="form-control" name="range" id="range">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
+        <label class="m-4" for="range">検索範囲を指定してください。</label>
+        <select class="m-4 form-control" name="range" id="range">
+          <option value="1">300m以内</option>
+          <option value="2">500m以内</option>
+          <option value="3">1km以内</option>
+          <option value="4">2km以内</option>
+          <option value="5">3km以内</option>
         </select>
       </div>
       <input type="submit" class="btn btn-primary" value="検索" />
