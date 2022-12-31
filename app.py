@@ -10,17 +10,23 @@ app = Flask(__name__)
 app.secret_key = "range"
 
 hot_key = config.HOT_PEPPER_API_KEY
-geo_key = config.GEOCODING_API_KEY
+map_key = config.GOOGLE_MAPS_API_KEY
 hot_url = config.HOT_PEPPER_API_URL
 geo_url = config.GEOCODING_API_URL
+map_base_url = config.GOOGLE_MAPS_API_URL
 
-# 現在地近くの店舗をjson形式で抽出
-def get_shops_json(range):
-    # Geolocation APIを使って緯度・経度を取得
+
+# Geolocation APIを使って現在地の緯度・経度を取得
+def get_location():
     data = requests.get(geo_url).json()
     lat = data['latitude']
     lng = data['longitude']
+    return lat, lng
 
+
+# 現在地近くの店舗をjson形式で抽出
+def get_shops_json(range):
+    lat, lng = get_location()
     # 検索クエリ
     query = {
             'key': hot_key, # APIキー
@@ -37,6 +43,7 @@ def get_shops_json(range):
     # 戻り値をjson形式で読み出し、['results']['shop']を抽出
     shops = json.loads(responce.text)['results']['shop']
     return shops
+
 
 # shop.idを使って店舗詳細情報を取得
 def get_shop_detail(id):
@@ -56,6 +63,7 @@ def get_shop_detail(id):
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 # 検索結果一覧
 @app.route('/result', methods=['GET', 'POST'])
@@ -89,10 +97,17 @@ def result():
     pagination = Pagination(page=page, total=len(shops),  per_page=20, css_framework='bootstrap4')
     return render_template('result.html', shops=res, pagination=pagination)
 
+
+# 詳細画面
 @app.route('/detail/<shop_id>')
 def detail(shop_id):
-    detail = get_shop_detail(shop_id)
-    return render_template('detail.html', shop=detail)
+    shop = get_shop_detail(shop_id)
+    lat, lng = get_location()
+    map_url = '{}origin={},{}&destination={},{}'.format(
+    map_base_url, lat, lng, shop['lat'], shop['lng']
+    )
+
+    return render_template('detail.html', shop=shop, map_url=map_url)
 
 
 if __name__ == "__main__":
