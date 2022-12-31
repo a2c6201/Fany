@@ -81,7 +81,12 @@ def result():
     except Exception:
         error = '現在地が特定できませんでした'
         return render_template('index.html', error=error)
+    # お店が見つからなかった時
     result = get_shops_json(range)
+    if not result:
+        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
+        return render_template('index.html', error=error)
+
     # クエリから表示しているページのページ番号を取得
     page = request.args.get(get_page_parameter(), type=int, default=1)
     # ページング設定
