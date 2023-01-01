@@ -7,8 +7,8 @@ from azure.keyvault.secrets import SecretClient
 from azure.storage.queue import QueueClient
 from dotenv import load_dotenv
 
-dotenv_path = join(dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+# dotenv_path = join(dirname(__file__), '.env')
+# load_dotenv(dotenv_path)
 
 # 認証に必要なキーとトークン
 HOT_PEPPER_API_KEY = os.environ['HOT_PEPPER_API_KEY']
