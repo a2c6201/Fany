@@ -2,10 +2,12 @@
 <div class="container">
   <div class="row">
     <h2 class="mt-4 mb-4 border-2 border-bottom">{{ shop.name }}</h2>
-    <h5>
-      <i class="bi bi-geo-alt"> </i>
-      {{ shop.address }}
-    </h5>
+    <a href="{{ map_url }}">
+      <h5>
+        <i class="bi bi-geo-alt"> </i>
+        {{ shop.address }}
+      </h5>
+    </a>
     <p>
       <i class="bi bi-calendar-check"> </i>
       営業時間：{{ shop.open }}
@@ -16,6 +18,16 @@
       <img src="{{ shop.photo.pc.l }}" alt="店舗画像" />
     </div>
   </div>
-  <button type="button" onclick="history.back()">戻る</button>
+  <div class="col-2 mx-auto">
+    <button
+      type="button"
+      class="m-5 btn text-white"
+      onclick="history.back()"
+      style="background-color: #ffa72c"
+    >
+      戻る
+    </button>
+  </div>
 </div>
+
 {% endblock %}
