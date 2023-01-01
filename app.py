@@ -25,7 +25,7 @@ def get_location():
 
 
 # 現在地近くの店舗をjson形式で抽出
-def get_shops_json(range):
+def shops_json(range):
     lat, lng = get_location()
     # 検索クエリ
     query = {
@@ -46,7 +46,7 @@ def get_shops_json(range):
 
 
 # shop.idを使って店舗詳細情報を取得
-def get_shop_detail(id):
+def shop_json(id):
     query = {
         'key': hot_key, # APIキー
         'id': id,
@@ -80,12 +80,12 @@ def result():
 
     # メイン処理
     try:
-        get_shops_json(range)
+        shops_json(range)
     except Exception:
         error = '現在地が特定できませんでした'
         return render_template('index.html', error=error)
     # お店が見つからなかった時
-    shops = get_shops_json(range)
+    shops = shops_json(range)
     if not shops:
         error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
         return render_template('index.html', error=error)
@@ -101,12 +101,11 @@ def result():
 # 詳細画面
 @app.route('/detail/<shop_id>')
 def detail(shop_id):
-    shop = get_shop_detail(shop_id)
+    shop = shop_json(shop_id)
     lat, lng = get_location()
     map_url = '{}origin={},{}&destination={},{}'.format(
     map_base_url, lat, lng, shop['lat'], shop['lng']
     )
-
     return render_template('detail.html', shop=shop, map_url=map_url)
 
 
