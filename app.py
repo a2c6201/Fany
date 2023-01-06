@@ -58,8 +58,7 @@ def shop_json(id):
 # 検索画面
 @app.route('/')
 def index():
-    error = None
-    return render_template('index.html', error=error)
+    return render_template('index.html')
 
 
 # 検索結果一覧
@@ -72,20 +71,15 @@ def result():
 
     range = session['range']
     error = None
-    if not range:
-        error = '検索範囲を指定してください'
-        return render_template('index.html', error=error)
-
     # メイン処理
     try:
         shops_json(range)
     except Exception:
-        error = '現在地が特定できませんでした'
+        error = '現在地が特定できませんでした' # TODO ローカル環境　キー削除でつまづく
         return render_template('index.html', error=error)
-    # お店が見つからなかった時
     shops = shops_json(range)
     if not shops:
-        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
+        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')  # TODO デプロイ環境ここでつまづく
         return render_template('index.html', error=error)
 
     # クエリから表示しているページのページ番号を取得
