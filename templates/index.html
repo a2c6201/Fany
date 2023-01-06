@@ -3,6 +3,7 @@
   <div class="user-input">
     {% if error %}
     <p class="m-3 error alert-danger rounded">{{error}}</p>
+    <p class="m-3 error alert-danger rounded">{{lat, lng}}</p>
     {% endif %}
     <form action="/result" method="POST">
       <div class="form-group">

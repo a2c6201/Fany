@@ -88,7 +88,8 @@ def result():
     shops = shops_json(range)
     if not shops:
         error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
-        return render_template('index.html', error=error)
+        lat, lng = get_location()
+        return render_template('index.html', error=error, lat=lat, lng=lng)
 
     # クエリから表示しているページのページ番号を取得
     page = request.args.get(get_page_parameter(), type=int, default=1)
