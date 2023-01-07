@@ -61,6 +61,11 @@ Flask 2.2.2
 - ホットペッパーグルメサーチ API
 - Geolocation API
 
+###　 Lint tool
+
+- flake8 (CI ツールで利用)
+- autopep8
+
 ## いただきたいアドバイス
 
 ## 使用方法
