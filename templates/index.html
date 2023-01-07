@@ -1,22 +1,33 @@
 {% extends "base.html" %} {% block title %}Fany{% endblock %} {% block body %}
 <main class="container text-center">
-  <div class="user-input">
-    {% if error %}
-    <p class="m-3 error alert-danger rounded">{{error}}</p>
-    <p class="m-3 error alert-danger rounded">{{lat, lng}}</p>
-    {% endif %}
-    <div class="form-group">
-      <label class="m-4" for="range">検索範囲を指定してください。</label>
-      <select class="m-4 form-control" name="range" id="range">
-        <option value="1">300m以内</option>
-        <option value="2">500m以内</option>
-        <option value="3">1km以内</option>
-        <option value="4">2km以内</option>
-        <option value="5">3km以内</option>
-      </select>
-    </div>
-    <input id="btn" type="submit" class="btn btn-primary" value="検索" />
+  <div class="card my-5">
+    <div class="card-body display-1">めしなり</div>
   </div>
+  {% if error %}
+  <p class="m-3 error alert-danger rounded">{{error}}</p>
+  {% endif %}
+  <div class="form-group">
+    <select
+      class="form-select form-select-lg m-4"
+      aria-label=".form-select-lg"
+      name="range"
+      id="range"
+    >
+      <option selected>検索範囲を指定してください。</option>
+      <option value="1">300m圏内 (徒歩3分)</option>
+      <option value="2">500m圏内 (徒歩7分)</option>
+      <option value="3">1km圏内 (徒歩10分から15分)</option>
+      <option value="4">2km圏内 (徒歩25分)</option>
+      <option value="5">3km圏内 (車で15分)</option>
+    </select>
+  </div>
+  <input
+    id="btn"
+    type="submit"
+    class="btn text-white"
+    value="検索"
+    style="background-color: #ffa72c"
+  />
 </main>
 
 {% endblock %}
