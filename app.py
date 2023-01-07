@@ -18,11 +18,11 @@ map_base_url = config.GOOGLE_MAPS_API_URL
 # 現在地近くの店舗をjson形式で抽出
 def shops_json(range, lat, lng):
     query = {
-            'key': hot_key, # APIキー
-            'lat': lat, # 現在地の緯度
-            'lng': lng, # 現在地の経度
-            'range': range, # 2000m以内
-            'count': 50, # 取得データ数
+            'key': hot_key,  # APIキー
+            'lat': lat,      # 現在地の緯度
+            'lng': lng,      # 現在地の経度
+            'range': range,  # 2000m以内
+            'count': 50,     # 取得データ数
             'format': 'json' # データ形式json
             }
 
