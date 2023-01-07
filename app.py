@@ -12,7 +12,6 @@ app.secret_key = "range"
 hot_key = config.HOT_PEPPER_API_KEY
 map_key = config.GOOGLE_MAPS_API_KEY
 hot_url = config.HOT_PEPPER_API_URL
-geo_url = config.GEOCODING_API_URL
 map_base_url = config.GOOGLE_MAPS_API_URL
 
 
