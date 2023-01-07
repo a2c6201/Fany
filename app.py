@@ -18,13 +18,13 @@ map_base_url = config.GOOGLE_MAPS_API_URL
 # 現在地近くの店舗をjson形式で抽出
 def shops_json(range, lat, lng):
     query = {
-            'key': hot_key,  # APIキー
-            'lat': lat,      # 現在地の緯度
-            'lng': lng,      # 現在地の経度
-            'range': range,  # 2000m以内
-            'count': 50,     # 取得データ数
-            'format': 'json' # データ形式json
-            }
+        'key': hot_key,   # APIキー
+        'lat': lat,       # 現在地の緯度
+        'lng': lng,       # 現在地の経度
+        'range': range,   # 2000m以内
+        'count': 50,      # 取得データ数
+        'format': 'json'  # データ形式json
+    }
 
     # URLとクエリでリクエスト
     responce = requests.get(hot_url, query)
@@ -38,10 +38,10 @@ def shops_json(range, lat, lng):
 # shop.idを使って店舗詳細情報を取得
 def shop_json(id):
     query = {
-            'key': hot_key, # APIキー
-            'id': id,
-            'format': 'json' # データ形式json
-            }
+        'key': hot_key,  # APIキー
+        'id': id,
+        'format': 'json'  # データ形式json
+    }
 
     # URLとクエリでリクエスト
     responce = requests.get(hot_url, query)
@@ -60,7 +60,7 @@ def index():
 @app.route('/result', methods=['GET', 'POST'])
 def result():
     if request.method == 'POST':
-        if(request.headers['Content-Type'] == 'application/json'):
+        if (request.headers['Content-Type'] == 'application/json'):
             session.permanent = True
             session['lat'] = request.json['lat']
             session['lng'] = request.json['lng']
