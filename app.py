@@ -75,12 +75,12 @@ def result():
     try:
         shops_json(range, lat, lng)
     except Exception:
-        error = '現在地が特定できませんでした' # TODO ローカル環境　キー削除でつまづく
+        error = '現在地が特定できませんでした'
         return render_template('index.html', error=error)
 
     shops = shops_json(range, lat, lng)
     if not shops:
-        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')  # TODO デプロイ環境ここでつまづく
+        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
         return render_template('index.html', error=error)
 
     # クエリから表示しているページのページ番号を取得
