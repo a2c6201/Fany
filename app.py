@@ -9,7 +9,7 @@ import config
 app = Flask(__name__)
 app.secret_key = "range"
 
-hot_key = config.HOT_PEPPER_API_KEY
+hot_key = config.HOT_PEPPER_API_KEY  # TODO省略しない
 
 hot_url = config.HOT_PEPPER_API_URL
 map_base_url = config.GOOGLE_MAPS_API_URL
@@ -30,6 +30,7 @@ def shops_json(range, lat, lng):
     responce = requests.get(hot_url, query)
 
     # 戻り値をjson形式で読み出し、['results']['shop']を抽出
+
     shops = json.loads(responce.text)['results']['shop']
     return shops
 
@@ -41,6 +42,7 @@ def shop_json(id):
             'id': id,
             'format': 'json' # データ形式json
             }
+
     # URLとクエリでリクエスト
     responce = requests.get(hot_url, query)
     # 戻り値をjson形式で読み出し、['results']['shop']を抽出
@@ -68,26 +70,28 @@ def result():
     lat = session['lat']
     lng = session['lng']
     error = None
-    if not range:
-        error = '検索範囲を指定してください'
-        return render_template('index.html', error=error)
+
     # メイン処理
     try:
         shops_json(range, lat, lng)
     except Exception:
-        error = '現在地が特定できませんでした'
+        error = '現在地が特定できませんでした' # TODO ローカル環境　キー削除でつまづく
         return render_template('index.html', error=error)
-    # お店が見つからなかった時
+
     shops = shops_json(range, lat, lng)
     if not shops:
-        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
-        return render_template('index.html', error=error, lat=lat, lng=lng)
+        error = ('お店が見つかりませんでした 検索範囲を広げてみてください')  # TODO デプロイ環境ここでつまづく
+        return render_template('index.html', error=error)
 
     # クエリから表示しているページのページ番号を取得
     page = request.args.get(get_page_parameter(), type=int, default=1)
     # ページング設定
-    res = shops[(page - 1)*20: page*20]
-    pagination = Pagination(page=page, total=len(shops),  per_page=20, css_framework='bootstrap4')
+    res = shops[(page - 1) * 20: page * 20]
+    pagination = Pagination(
+        page=page,
+        total=len(shops),
+        per_page=20,
+        css_framework='bootstrap4')
     return render_template('result.html', shops=res, pagination=pagination)
 
 
@@ -98,7 +102,7 @@ def detail(shop_id):
     lat = session['lat']
     lng = session['lng']
     map_url = '{}origin={},{}&destination={},{}'.format(
-    map_base_url, lat, lng, shop['lat'], shop['lng']
+        map_base_url, lat, lng, shop['lat'], shop['lng']
     )
     return render_template('detail.html', shop=shop, map_url=map_url)
 
