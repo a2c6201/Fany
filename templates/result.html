@@ -28,7 +28,9 @@
       </div>
       {% endfor %}
     </div>
-    <div class="m-5 row justify-content-around">{{ pagination.links }}</div>
+    <ul class="pagination justify-content-center m-5">
+      {{ pagination.links }}
+    </ul>
   </div>
 </div>
 {% endblock %}

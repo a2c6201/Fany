@@ -1,12 +1,13 @@
 {% extends "base.html" %} {% block title %}Fany{% endblock %} {% block body %}
-<main class="container text-center">
-  <div class="card my-5">
+<div class="container text-center">
+  <div class="card my-5" style="background-color: #ffa72c">
     <div class="card-body display-1">めしなり</div>
+    <h4 class="text-secondary">- 近くにある飲食店を探します</h4>
   </div>
   {% if error %}
   <p class="m-3 error alert-danger rounded">{{error}}</p>
   {% endif %}
-  <div class="form-group">
+  <div class="d-flex">
     <select
       class="form-select form-select-lg m-4"
       aria-label=".form-select-lg"
@@ -24,10 +25,10 @@
   <input
     id="btn"
     type="submit"
-    class="btn text-white"
-    value="検索"
+    class="btn text-white my-3"
+    value="近くのお店を検索"
     style="background-color: #ffa72c"
   />
-</main>
+</div>
 
 {% endblock %}
