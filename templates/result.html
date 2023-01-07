@@ -8,7 +8,7 @@
         <a href="/detail/{{ shop.id }}" class="card-body text-decoration-none">
           <img
             src="{{ shop.photo.pc.l }}"
-            class="h-50 card-img-top"
+            class="h-45 card-img-top"
             alt="店舗画像"
           />
           <div class="card-body text-dark">
@@ -22,6 +22,7 @@
                 <i class="bi bi-tag"></i>
                 {{ shop.genre.name }}
               </p>
+              <p>{{ shop.catch }}</p>
             </div>
           </div>
         </a>
