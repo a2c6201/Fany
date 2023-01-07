@@ -15,8 +15,8 @@ hot_url = config.HOT_PEPPER_API_URL
 map_base_url = config.GOOGLE_MAPS_API_URL
 
 
-# 現在地近くの店舗をjson形式で抽出
 def shops_json(range, lat, lng):
+    # 現在地近くの店舗をjson形式で抽出
     query = {
         'key': hot_key,   # APIキー
         'lat': lat,       # 現在地の緯度
@@ -26,26 +26,20 @@ def shops_json(range, lat, lng):
         'format': 'json'  # データ形式json
     }
 
-    # URLとクエリでリクエスト
     responce = requests.get(hot_url, query)
-
-    # 戻り値をjson形式で読み出し、['results']['shop']を抽出
-
     shops = json.loads(responce.text)['results']['shop']
     return shops
 
 
-# shop.idを使って店舗詳細情報を取得
 def shop_json(id):
+    # shop.idを使って店舗詳細情報を取得
     query = {
         'key': hot_key,  # APIキー
         'id': id,
         'format': 'json'  # データ形式json
     }
 
-    # URLとクエリでリクエスト
     responce = requests.get(hot_url, query)
-    # 戻り値をjson形式で読み出し、['results']['shop']を抽出
     result = json.loads(responce.text)['results']['shop']
     return result[0]
 
