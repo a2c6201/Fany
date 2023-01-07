@@ -1,51 +1,43 @@
 import json
 
-import requests
 from flask import Flask, render_template, request, session
 from flask_paginate import Pagination, get_page_parameter
 
 import config
+import fetcher as fe
 
 app = Flask(__name__)
 app.secret_key = "range"
 
-hot_key = config.HOT_PEPPER_API_KEY  # TODO省略しない
-
-hot_url = config.HOT_PEPPER_API_URL
-map_base_url = config.GOOGLE_MAPS_API_URL
+HOT_PEPPER_API_KEY = config.HOT_PEPPER_API_KEY
+GOOGLE_MAPS_API_URL = config.GOOGLE_MAPS_API_URL
 
 
-# 現在地近くの店舗をjson形式で抽出
 def shops_json(range, lat, lng):
+    # 現在地近くの店舗をjson形式で抽出
     query = {
-            'key': hot_key,  # APIキー
-            'lat': lat,      # 現在地の緯度
-            'lng': lng,      # 現在地の経度
-            'range': range,  # 2000m以内
-            'count': 50,     # 取得データ数
-            'format': 'json' # データ形式json
-            }
+        'key': HOT_PEPPER_API_KEY,   # APIキー
+        'lat': lat,       # 現在地の緯度
+        'lng': lng,       # 現在地の経度
+        'range': range,   # 検索範囲
+        'count': 50,      # 取得データ数
+        'format': 'json'  # データ形式json
+    }
 
-    # URLとクエリでリクエスト
-    responce = requests.get(hot_url, query)
-
-    # 戻り値をjson形式で読み出し、['results']['shop']を抽出
-
+    responce = fe.search(query)
     shops = json.loads(responce.text)['results']['shop']
     return shops
 
 
-# shop.idを使って店舗詳細情報を取得
 def shop_json(id):
+    # shop.idを使って店舗詳細情報を取得
     query = {
-            'key': hot_key, # APIキー
-            'id': id,
-            'format': 'json' # データ形式json
-            }
+        'key': HOT_PEPPER_API_KEY,
+        'id': id,
+        'format': 'json'
+    }
 
-    # URLとクエリでリクエスト
-    responce = requests.get(hot_url, query)
-    # 戻り値をjson形式で読み出し、['results']['shop']を抽出
+    responce = fe.search(query)
     result = json.loads(responce.text)['results']['shop']
     return result[0]
 
@@ -60,7 +52,7 @@ def index():
 @app.route('/result', methods=['GET', 'POST'])
 def result():
     if request.method == 'POST':
-        if(request.headers['Content-Type'] == 'application/json'):
+        if (request.headers['Content-Type'] == 'application/json'):
             session.permanent = True
             session['lat'] = request.json['lat']
             session['lng'] = request.json['lng']
@@ -102,7 +94,7 @@ def detail(shop_id):
     lat = session['lat']
     lng = session['lng']
     map_url = '{}origin={},{}&destination={},{}'.format(
-        map_base_url, lat, lng, shop['lat'], shop['lng']
+        GOOGLE_MAPS_API_URL, lat, lng, shop['lat'], shop['lng']
     )
     return render_template('detail.html', shop=shop, map_url=map_url)
 

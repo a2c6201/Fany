@@ -13,9 +13,11 @@
 
 ### デザイン面でこだわったポイント
 
-## 公開したアプリの URL（Store にリリースしている場合）
+### 公開したアプリの URL（Store にリリースしている場合）
 
-## 該当プロジェクトのリポジトリ URL（GitHub,GitLab など Git ホスティングサービスを利用されている場合）
+https://fany-fuku.azurewebsites.net
+
+### 該当プロジェクトのリポジトリ URL（GitHub,GitLab など Git ホスティングサービスを利用されている場合）
 
 https://github.com/a2c6201/Fany
 
@@ -60,6 +62,11 @@ Flask 2.2.2
 
 - ホットペッパーグルメサーチ API
 - Geolocation API
+
+###　 Lint tool
+
+- flake8 (CI ツールで利用)
+- autopep8
 
 ## いただきたいアドバイス
 
