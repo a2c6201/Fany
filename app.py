@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = "range"
 
 HOT_PEPPER_API_KEY = config.HOT_PEPPER_API_KEY
+HOT_PEPPER_URL = config.HOT_PEPPER_URL
 GOOGLE_MAPS_API_URL = config.GOOGLE_MAPS_API_URL
 
 
@@ -96,7 +97,8 @@ def detail(shop_id):
     map_url = '{}origin={},{}&destination={},{}'.format(
         GOOGLE_MAPS_API_URL, lat, lng, shop['lat'], shop['lng']
     )
-    return render_template('detail.html', shop=shop, map_url=map_url)
+    shop_url = HOT_PEPPER_URL.format(shop_id)
+    return render_template('detail.html', shop=shop, map_url=map_url, shop_url=shop_url)
 
 
 if __name__ == "__main__":

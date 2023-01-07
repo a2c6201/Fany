@@ -1,14 +1,21 @@
 {% extends "base.html" %} {% block body %}
 <header>{% include "navbar.html" %}</header>
 <div class="container">
+  <div class="my-4 row border-2 border-bottom">
+    <div class="col-2">
+      <img src="{{ shop.logo_image }}" alt="店舗画像" />
+    </div>
+    <div class="col">
+      <h7 class="text-secondary">{{ shop.name_kana }}</h7>
+      <h2>{{ shop.name }}</h2>
+    </div>
+  </div>
   <div class="row">
-    <h2 class="mt-4 mb-4 border-2 border-bottom">{{ shop.name }}</h2>
-    <a href="{{ map_url }}">
-      <h5>
-        <i class="bi bi-geo-alt"> </i>
-        {{ shop.address }}
-      </h5>
-    </a>
+    <h5 class="mb-3">
+      <i class="bi bi-tag"></i>
+      {{ shop.genre.name }} {% if shop.sub_genre %} {{shop.sub_genre.name}} {%
+      endif %}
+    </h5>
     <p>
       <i class="bi bi-calendar-check"> </i>
       営業時間：{{ shop.open }}
@@ -16,19 +23,55 @@
   </div>
   <div class="row">
     <div class="col">
-      <img src="{{ shop.photo.pc.l }}" alt="店舗画像" />
+      <div class="fullscreen-image" data-image="{{ shop.photo.pc.l }}">
+        <img src="{{ shop.photo.pc.l }}" alt="店舗画像" />
+      </div>
     </div>
   </div>
-  <div class="text-center">
-    <button
-      type="button"
-      class="m-5 btn text-white"
-      onclick="history.back()"
-      style="background-color: #ffa72c"
+  <div class="row">
+    <a
+      href="{{ shop_url }}"
+      class="m-3 btn text-white"
+      role="button"
+      data-bs-toggle="button"
+      style="background-color: #ffa72c; max-width: 400px"
     >
-      戻る
-    </button>
+      HOT PEPPER グルメで予約する
+    </a>
   </div>
+  <div class="row">
+    <h4 class="mt-4 mb-4 border-2 border-bottom">住所</h4>
+    <h5>
+      <i class="bi bi-geo-alt"> </i>
+      {{ shop.address }}
+    </h5>
+  </div>
+  <div class="row">
+    <a
+      href="{{ map_url }}"
+      class="m-3 btn text-white col"
+      role="button"
+      data-bs-toggle="button"
+      style="background-color: #ffa72c; max-width: 400px"
+    >
+      ここからお店までGoogleマップで道案内
+    </a>
+  </div>
+  <div class="text-center">
+    <div class="text-center">
+      <button
+        type="button"
+        class="m-5 btn text-white"
+        onclick="history.back()"
+        style="background-color: #ffa72c"
+      >
+        戻る
+      </button>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var elements = document.querySelectorAll(".fullscreen-image");
+    Intense(elements);
+  </script>
+  {% endblock %}
 </div>
-
-{% endblock %}
