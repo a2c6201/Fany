@@ -17,11 +17,11 @@ def shops_json(range, lat, lng):
     # 現在地近くの店舗をjson形式で抽出
     query = {
         'key': HOT_PEPPER_API_KEY,   # APIキー
-        'lat': lat,       # 現在地の緯度
-        'lng': lng,       # 現在地の経度
-        'range': range,   # 検索範囲
-        'count': 50,      # 取得データ数
-        'format': 'json'  # データ形式json
+        'lat': lat,                  # 現在地の緯度
+        'lng': lng,                  # 現在地の経度
+        'range': range,              # 検索範囲
+        'count': 50,                 # 取得データ数
+        'format': 'json'             # データ形式json
     }
 
     responce = fe.search(query)
