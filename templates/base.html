@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" id="favicon" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon-180x180.png"
+    />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,11 +19,20 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css"
     />
+    <script type="text/javascript" src="../static/intense.min.js"></script>
+    <!-- TODO こいつらの切り分け -->
+    <style type="text/css">
+      .fullscreen-image {
+        cursor: url("./plus_cursor.png"), pointer; /* マウスポインタを指定 */
+        display: inline-block; /* 横方向に並べる指定 */
+        margin: 0px 5px 5px 0px; /* 周囲の余白量(右と下に5pxずつ) */
+      }
+    </style>
+    <!--  -->
     <script src="{{url_for('static', filename='index.js')}}"></script>
-    <title>Fany</title>
+    <title>めしなり</title>
   </head>
   <body>
-    <header>{% include "navbar.html" %}</header>
-    <div class="container">{% block body %}{% endblock %}</div>
+    {% block body %}{% endblock %}
   </body>
 </html>
