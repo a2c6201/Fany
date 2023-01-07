@@ -6,6 +6,8 @@ name: Build and deploy Python app to Azure Web App - meshinari
 
 on:
   push:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
@@ -29,7 +31,6 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install flake8
-
       - name: Lint
         run: flake8 app.py config.py --ignore=E501 # 1行の文字数制限を無視
 
@@ -63,4 +64,4 @@ jobs:
         with:
           app-name: "meshinari"
           slot-name: "Production"
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_784D37449F6741FB9CD3FACD83AE9933 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_8325D5CCA7EC4407A7EFFC853B8C4383 }}
