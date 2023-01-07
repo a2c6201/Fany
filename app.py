@@ -16,18 +16,8 @@ geo_url = config.GEOCODING_API_URL
 map_base_url = config.GOOGLE_MAPS_API_URL
 
 
-# Geolocation APIを使って現在地の緯度・経度を取得
-def get_location():
-    data = requests.get(geo_url).json()
-    lat = data['latitude']
-    lng = data['longitude']
-    return lat, lng
-
-
 # 現在地近くの店舗をjson形式で抽出
-def shops_json(range):
-    lat, lng = get_location()
-    # 検索クエリ
+def shops_json(range, lat, lng):
     query = {
             'key': hot_key, # APIキー
             'lat': lat, # 現在地の緯度
@@ -48,9 +38,9 @@ def shops_json(range):
 # shop.idを使って店舗詳細情報を取得
 def shop_json(id):
     query = {
-        'key': hot_key, # APIキー
-        'id': id,
-        'format': 'json' # データ形式json
+            'key': hot_key, # APIキー
+            'id': id,
+            'format': 'json' # データ形式json
             }
     # URLとクエリでリクエスト
     responce = requests.get(hot_url, query)
@@ -69,26 +59,29 @@ def index():
 @app.route('/result', methods=['GET', 'POST'])
 def result():
     if request.method == 'POST':
-        session.permanent = True
-        session['range'] = request.form.get('range')  # sessionを使って検索条件データを保持しページングに対応
+        if(request.headers['Content-Type'] == 'application/json'):
+            session.permanent = True
+            session['lat'] = request.json['lat']
+            session['lng'] = request.json['lng']
+            session['range'] = request.json['range']
 
     range = session['range']
+    lat = session['lat']
+    lng = session['lng']
     error = None
     if not range:
         error = '検索範囲を指定してください'
         return render_template('index.html', error=error)
-
     # メイン処理
     try:
-        shops_json(range)
+        shops_json(range, lat, lng)
     except Exception:
         error = '現在地が特定できませんでした'
         return render_template('index.html', error=error)
     # お店が見つからなかった時
-    shops = shops_json(range)
+    shops = shops_json(range, lat, lng)
     if not shops:
         error = ('お店が見つかりませんでした 検索範囲を広げてみてください')
-        lat, lng = get_location()
         return render_template('index.html', error=error, lat=lat, lng=lng)
 
     # クエリから表示しているページのページ番号を取得
@@ -103,7 +96,8 @@ def result():
 @app.route('/detail/<shop_id>')
 def detail(shop_id):
     shop = shop_json(shop_id)
-    lat, lng = get_location()
+    lat = session['lat']
+    lng = session['lng']
     map_url = '{}origin={},{}&destination={},{}'.format(
     map_base_url, lat, lng, shop['lat'], shop['lng']
     )
