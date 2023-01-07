@@ -7,7 +7,7 @@ name: Build and deploy Python app to Azure Web App - fany-fuku
 on:
   push:
     branches:
-      - feature/add-deploy-setting
+      - main
   workflow_dispatch:
 
 jobs:
