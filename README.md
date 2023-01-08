@@ -31,7 +31,7 @@
 
 Azure
 
-### 公開したアプリの URL（Store にリリースしている場合）
+### 公開したアプリの URL
 
 https://meshinari.azurewebsites.net
 
