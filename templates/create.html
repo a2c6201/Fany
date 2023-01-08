@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block body %}
+<header>{% include "navbar.html" %}</header>
+<div class="container">
+  <h1>画像投稿</h1>
+  <form method="post" action="" enctype="multipart/form-data">
+    <label for="title">タイトル</label>
+    <input type="text" name="title" />
+    <input type="file" name="image" accept="image/png, image/jpeg, image/jpg" />
+    <button type="submit">投稿</button>
+  </form>
+</div>
+{% endblock %}
