@@ -1,6 +1,5 @@
 import base64
 import json
-import sqlite3
 from datetime import datetime
 
 import pytz
@@ -130,12 +129,12 @@ def detail(shop_id):
 @app.route('/create/<shop_id>', methods=['GET', 'POST'])
 def create(shop_id):
     if request.method == "POST":
-    #     title = request.form.get('title')
-    #     image = request.files['image']
-    #     photo = Photo(shop_id=shop_id, title=title, image=image)
-    #     db.session.add(photo)
-    #     db.session.commit()
-    #     return redirect('/detail/{}'.format(shop_id))
+        #     title = request.form.get('title')
+        #     image = request.files['image']
+        #     photo = Photo(shop_id=shop_id, title=title, image=image)
+        #     db.session.add(photo)
+        #     db.session.commit()
+        #     return redirect('/detail/{}'.format(shop_id))
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
